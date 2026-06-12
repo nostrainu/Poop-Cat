@@ -17,11 +17,11 @@
         "Files": [
             {
                 "Type": "Functions",
-                "Url": "https://raw.githubusercontent.com/nostrainu/ObsidianFork/main/Main/Anime Squadron/ASFunc.lua"
+                "Url": "https://raw.githubusercontent.com/nostrainu/Poop-Cat/refs/heads/main/Main/AS/ASFunc.lua"
             },
             {
                 "Type": "UI",
-                "Url": "https://raw.githubusercontent.com/nostrainu/ObsidianFork/main/Main/Anime Squadron/ASMain.lua"
+                "Url": "https://raw.githubusercontent.com/nostrainu/Poop-Cat/refs/heads/main/Main/AS/ASMain.lua"
             }
         ]
     }
