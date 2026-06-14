@@ -4,11 +4,11 @@
         "Files": [
             {
                 "Type": "Functions",
-                "Url": "https://raw.githubusercontent.com/nostrainu/Poop-Cat/refs/heads/main/Main/AS/ASFunc.lua"
+                "Url": "https://raw.githubusercontent.com/nostrainu/Poop-Cat/main/Main/AS/ASFunc.lua"
             },
             {
                 "Type": "UI",
-                "Url": "https://raw.githubusercontent.com/nostrainu/Poop-Cat/refs/heads/main/Main/AS/ASMain.lua"
+                "Url": "https://raw.githubusercontent.com/nostrainu/Poop-Cat/main/Main/AS/ASMain.lua"
             }
         ]
     },
@@ -16,4 +16,3 @@
     "71132543521245": "MAIN",
     "91255392593879": "MAIN"
 }
-
