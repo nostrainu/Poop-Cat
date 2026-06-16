@@ -13,6 +13,21 @@
         ]
     },
 
+    "GAG2": {
+        "Name": "Grow a Garden 2",
+        "Files": [
+            {
+                "Type": "Functions",
+                "Url": "https://raw.githubusercontent.com/nostrainu/Poop-Cat/main/Main/GaG2/GaG2Func.lua"
+            },
+            {
+                "Type": "UI",
+                "Url": "https://raw.githubusercontent.com/nostrainu/Poop-Cat/main/Main/GaG2/GaG2Main.lua"
+            }
+        ]
+    },
+
     "71132543521245": "MAIN",
-    "91255392593879": "MAIN"
+    "91255392593879": "MAIN",
+    "97598239454123": "GAG2"
 }
