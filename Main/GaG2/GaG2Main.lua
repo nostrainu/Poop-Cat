@@ -36,6 +36,7 @@ if SharedModules then
 end
 
 local isWorker = getgenv().Automation == true or getgenv().Automitation == true
+warn("[GaG2] Automation=" .. tostring(getgenv().Automation) .. " isWorker=" .. tostring(isWorker))
 
 if not isWorker and (not getgenv().Host or getgenv().Host == "") then
     getgenv().Host = LocalPlayer.Name
