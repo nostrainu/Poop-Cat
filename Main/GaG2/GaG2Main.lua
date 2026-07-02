@@ -1226,6 +1226,7 @@ getgenv().GaG2_AltList = altList
 
 if getgenv().BobcatWS then
     getgenv().BobcatWS.OnStatus(function(altName, payload)
+        warn("[GaG2] OnStatus fired for: " .. tostring(altName))
         pcall(function()
             if getgenv().wsStatusCache then
                 getgenv().wsStatusCache[altName] = payload
