@@ -95,6 +95,14 @@ local function connect()
                                     name = currentName,
                                     userId = tostring(game:GetService("Players").LocalPlayer.UserId)
                                 }))
+                                ws:Send(safeEncode({
+                                    type = "status",
+                                    payload = {
+                                        Status = "Waiting",
+                                        LastActive = os.time(),
+                                        UserId = tostring(game:GetService("Players").LocalPlayer.UserId)
+                                    }
+                                }))
                             end)
                         end
                     elseif data.type == "join" and onStatusCallback then
