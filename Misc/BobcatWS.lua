@@ -15,6 +15,7 @@ local role = "alt"
 local currentGame = "unknown"
 local currentHost = ""
 local currentName = ""
+local pendingMessages = {}
 
 local function safeEncode(t)
     local ok, result = pcall(HttpService.JSONEncode, HttpService, t)
@@ -24,6 +25,15 @@ end
 local function safeDecode(s)
     local ok, result = pcall(HttpService.JSONDecode, HttpService, s)
     return ok and result or nil
+end
+
+local function flushPending()
+    if onStatusCallback and #pendingMessages > 0 then
+        for _, item in ipairs(pendingMessages) do
+            pcall(onStatusCallback, item.name, item.payload)
+        end
+        table.clear(pendingMessages)
+    end
 end
 
 local function cleanup()
@@ -105,12 +115,21 @@ local function connect()
                                 }))
                             end)
                         end
-                    elseif data.type == "join" and onStatusCallback then
-                        pcall(onStatusCallback, data.name, { UserId = data.userId, Status = "Online", LastActive = os.time() })
+                    elseif data.type == "join" then
+                        local payload = { UserId = data.userId, Status = "Online", LastActive = os.time() }
+                        if onStatusCallback then
+                            pcall(onStatusCallback, data.name, payload)
+                        else
+                            table.insert(pendingMessages, { name = data.name, payload = payload })
+                        end
+                    elseif data.type == "status" then
+                        if onStatusCallback then
+                            pcall(onStatusCallback, data.name, data.payload)
+                        else
+                            table.insert(pendingMessages, { name = data.name, payload = data.payload })
+                        end
                     elseif data.type == "settings" and onSettingsCallback then
                         pcall(onSettingsCallback, data.payload)
-                    elseif data.type == "status" and onStatusCallback then
-                        pcall(onStatusCallback, data.name, data.payload)
                     end
                 end)
 
@@ -153,6 +172,7 @@ end
 
 function BobcatWS.OnStatus(callback)
     onStatusCallback = callback
+    flushPending()
 end
 
 function BobcatWS.PushSettings(target, payload)
