@@ -1,37 +1,181 @@
---[[
-IronBrew:tm: obfuscation; Version 2.7.0
+local BobcatWS = {}
 
-........................................................................................................................................................................................................
-........................................................................................................................................................................................................
-.....,,...,.............................................................................................................................................................................................
-.... MMMMM,.............................................................................................................................................................................................
-....MMMMMMM,............................................................................................................................................................................................
-....MMMMMMM,............................................................................................................................................................................................
-....,MMMMMO.............................................................................................................................................................................................
-......,.................................................................................................................................................................................................
-..................................................,,,,,,............................................Z$$.................................................................................................
-...................................................:::::............................................MMMO................................................................................................
-.....:???? ,.......:????....,.8MMMMM,.......,,,MMMMI???INMMM.,................,.?ZMMMMDI:,,.........MMM$................................................................................................
-.....MMMMM?,.......MMMMM,,.OMMMMMMMM......, 7MM+?+++++++++?+DM$ .............MMMMMMMMMMMMMM ,,......MMM$................................................................................................
-.....MMMMM?,.......MMMMM..NMMMMMMMMM.,...,$M7++++++++++++++++++M$ .........MMMMMMMMMMMMMMMMMN .,....MMM$................................................................................................
-.....MMMMM?,.......MMMMMMMMMMM8..,,,.,..,MM?++++++++++++++++++++MM,,......MMMMMMMM~,.+MMMMMMMM......MMM$................................................................................................
-.....MMMMM?,.......MMMMMMMMZ ,,.......MMMMMMMMMMMMMDZZZZMMMMMMMMMMMMM ...MMMMMM,,,....., MMMMMM.....MMM$................................,.,,............................................................
-.....MMMMM?,.......MMMMMMM:............MMMMMMMMMMMMMMMMMMMMMMMMMMMMM....MMMMMD,...........MMMMMM.,..MMM$...:MMMMMMMM:,........8MMM:.,DMMMMM,......?MMMMMMMMI.........MMMM......... MMM,.........MMMI....
-.....MMMMM?,.......MMMMMM+............,M?+MMMMMMMMMM++?DMMMMMMMMM?+M,...MMMMM,.............MMMMM,,..MMM$,NMMMMMMMMMMMM8,.,....MMMM,NMMMMMMM,..,,MMMMMMMMMMMMMM.,.....MMMM.........7MMM7.........MMM$....
-.....MMMMM?,.......MMMMMM,............,M?++MMMMMMMM7++++MMMMMMMM$??MM,,+MMMMM,.............MMMMM=...MMM$,MMMZ...,?MMMMMM,.....MMMMMMMMM,......DMMMMM:,....MMMMMN,....MMMM.........7MMM7.........MMM$....
-.....MMMMM?,.......MMMMMM.............MM+??+MMMMMMM?++++MMMMMMMD??+$M,.MMMMM?.............,MMMMM?...MMM$,M,.,...,,,,MMMMM,....MMMMMM,,,,....,MMMMM,..,....,.MDNN$....MMMM.........7MMM7.........MMM$....
-.....MMMMM?,.......MMMMM?,............MM??++???????++++++?????+++++7M..$MMMM,.............,?MMMM.,..MMM$.............OMMMM....MMMMM.........$MMMM,....... MMMMMM.,...MMMM.........7MMM7.........MMM$....
-.....MMMMM?,.......MMMMM=,............NM?+++++++++++++++++++++++++?$M..MMMMM+,............,+MMMM+,..NMN$..............MMMM+,..MMMMM.........MMMM......,?MMMMM?.,.....MMMM.........7MMM7.........MMM$....
-.....MMMMM?,.......MMMMM,,............,M+?+++++++?++++++++?+?++++++M7,,DMMMM:...............MMMM:,..MMMN.,............$MMM7...MMMM=.........MMMM....,DMMMMM..........MMMM.........7MMM7.........MMM$....
-.....MMMMM?,.......MMMMM,,............:M$?++++?MM+++++++++DM?+++++?M,,,DMMMM+,..............MMMM+,..MMMM.,............?NMM?,..ZMMM,,........MMMM.,.MMMMMM,,..........MMMM,........7MMM7.........MMM$....
-.....MMMMM?,.......MMMMM,,.............,M=++++++DMD++?++DMM+++++++M:...$MMMM.,..............MMMM ,..MMMM..............OMMM,,..OMMM,,........MMMM.,MMMM?,,......MNZ,,,MMMM.........IMMM?,........MMM?....
-.....MMMMM?,.......MMMMM,,...............M+?+++++?+ZMMMN+++?+++++M7,...$MMMM................MMMM.,..=MMMN,..........,,MNMM.,..OMMM,.........?MMMI.,M..........,MMM,.,NMMM,........IMMMI.........MMM?....
-.....MMMMM?,.......MMMMM,,................M7+?+++++++++++++++++IM,,....$MMMM,...............MMMM,....MMMMN.,......,,.MMMM,....OMMM,,........,MMMMN..........,+MMM,...,MMMN,.....,,MMMMM,,,.....MMMM.....
-.....MMMMM?,.......MMMMM,,................,MM++++?++++++++????MM.......$MMMM,...............MMMM,.....MNMMM$,......MMMMM .....OMMM,,..........MMMMM~......,,MMMM ,....MMMMM,,,..~MMMMMMM~,,,.,MMMMM.....
-.....MMMMM?,.......MMMMM,,.................,,MMD+++++++++++$MM,.,......$MMMM,...............MMMM,.....,+NMMMMMMMMMMMMMM..,....OMMM,,.......... +NMMMMMMMMMMMMMM,.......MMMMMMMMMMMMN,NMMMMMMMMMMMN,.....
-.....MMMMM?........MMMMM,,.....................::MMMMMMMMM$.,.........,ZMMMM,,..............MMMM,,......, MMMMMMMMMM:.,,......+MMM................MMMMMMMMMM7,,,......,.,MMMMMMMMN.:...MMMMMMMMM,,......
-..........,.......,,.....,.........................,,,,.,...................................................,.,,.,,,...........,,,..................,,..,,,,..............,,..,,,.......,,.,,,,.........
-........................................................................................................................................................................................................
-]]
+local SERVER_URL = "wss://bobcatserver.onrender.com/ws"
+local AUTH_KEY = "069bfe9d585a01f57cef293741d5a8f3"
 
-local c=string.byte;local t=string.char;local C=string.sub;local M=table.concat;local l=table.insert;local d=math.ldexp;local i=getfenv or function()return _ENV end;local H=setmetatable;local A=select;local D=unpack or table.unpack;local a=tonumber;local function J(c)local e,n,E="","",{}local o=256;local F={}for l=0,o-1 do F[l]=t(l)end;local l=1;local function D()local e=a(C(c,l,l),36)l=l+1;local n=a(C(c,l,l+e-1),36)l=l+e;return n end;e=t(D())E[1]=e;while l<#c do local l=D()if F[l]then n=F[l]else n=e..C(e,1,1)end;F[o]=e..C(n,1,1)E[#E+1],e,o=n,n,o+1 end;return table.concat(E)end;local a=J('1Y2192752191F27622I22M22M1N121222721U22722622422H22M22022N22J27N1321U21V22N22021V22127Q22621U21S1227A2191D2761T1R1K2272232201K2211O1L1O2241T1S2231O1Q2262202231V1K1U1Q1P1S28E2241L2231U21921527622222421S22021921327622Y22022H23I27N22J21W28O21921227622T22H22H22L29F27O29I29821A27622421T22H21921627622G21V21Y21V21U22I21V27627629L27523227S21V22022622H22T21U22M29Z29A2AD2AF2AH22H23029Y21921127622Q21V23I22H27K22G22M2191X27623H2B321X29F29O21W21V2222B42AO2192B822M2BA2B122H2B329K27622S22M2AE21V2AG2AI22022129927622X21W22M27Z2BU2AR2BI2AA2BH2AA21R1W2192182CD2762CB21921B2CI2CG27429V29V2752852192CN2922192CH2142192CW27621L2CR2CX2CK2192172CT29327621Q2D22AA2192D92D52DB2D52A12102CG2CC29A2DE2CU2CC29L2A12752CH2B62AW2DR2CC2CC2DU2D421E2191Z2762CE2CE2DA2D12752172E02742E42CF2E62CO2DZ21921P2CK2CE2CO2CY2E62E62DI2762EM2D72EG21O2D12CE2EI2E62DM2E62EX2752ER2AA2EM2E52F22762E22EQ2762CJ2FA2752AC2F72752B62FD2192CC2FJ2C92EM2EP2FG2192742FJ2EM2E62DY2E62DQ2FQ2EU2E82E021R2CT2CE2DQ2EM2FU2EM2EZ2EM2FN2AB2F42762FI2FQ2FL2FZ27621P21C2762DI2G32E92CU2D22CE2DU2G72GE2E82GW2BZ2FJ2FF2E62GG2E62GI2FX2GY2G02EH2GM27529A2GP2G22D42CF2E52EM2DY2GL2GD2HD2GR2A12EK2FQ2G82762ES2E62F92H92GF2GR2GQ2G32AW2HP2E62HR2752HT2EM2HV2HK2752CC2HM2G32DI2EC2I32GK2HA2E12HY2HE29A2IF2EM2F12I92FR2GR2EH2FB2CA2E32GD2752FC2FQ22L27J21T21T2GZ21922V23I22Q22R22W21V27Z27X2182GI21R2EB2ED2752DI2IZ2CP29L2CJ2JP2JK2E72GE2HT27521D2CF2932CJ21721F2CF2IM2HS21H2762K321721M2D129L2CE2CJ2152K52FE2ED2D52CS2GK2D12JM2G32752F62AA2JM2EM2J129X2J42BH2J72J922X2AH21U2JE2JG2JI2KP2JL2DB1D2JO2CK2FC2DI2EF2FA2JU2192JW2CE2JY2D42K12CE2K32I52KF2BZ2CE2K82KA2CF2KD2LP2KB2GX2KJ2752EI29V2KM2IW2DB2JS2E62KT2J32CT2752B122M21Y2HF27527J2JC2202J421N2AA2D92M521921K2MO2192FP2F62K02HX2F62KE2MW2CU2FS2JJ2JH2LU2762L82HG2E72L62KP2F62CJ2E52EZ2AA2MQ2KO2AA2FP2IZ2MV2752MQ2MX2LP2NN2N02M42EG2F62IF2NJ2AA2EF2NC2GX2MO2NG2D32DR2NS2NU2GY23221T2AL2982HT2FP2AA2CQ2AA2E52NY2ED2KN2JJ2GY2MS27623E22022723I21U22621Y29D2MA21922I22422N2A929127523A23327H27J22H23E23I2341D2OP2OR2OT2OV22H1D2A62PI22M22G22L22L21U22N22H2BX1D27S1D22H21X2C21D22022D2AH22G22H2PQ2OX2MC2ME2EM22M22L2242A82772NI2MO2NL2G42K42HS2OJ2NS2N32NH2E821J2GD2EC2MY2KG2CE2QO2O32CH2I22752OI2E52OK2KP2MN2OL2O22CA2N12ES2N62GE2GQ2O62EX2MT2QG2IY2RI2M62OD2RK2OC2FJ2ON2O02JR2752FY2RQ2AV2RK2OD2FP2C92FP2H12FP2H32FP2H52FP2HV2RV2N12JS2NZ2IS2JJ2F62OK2M72J22J42ES2OZ2P12192K12P42P627I27K2PA2PC2BT2BV22H21W2PV22322421W21T2BX1N2852DY2Q52AM22N2BD2222Q72242MD2OX2OZ21W22H2KP27521L2312JS2OV22C2OX2952972OX21X2AL29Z2ES21V2962OB27622N21U2T32E62QB2QD2A92FP2AY22O22027B2242222982FY2SV2C62FY2AY2O82OA2192LP2P52P72SS2PB1D2UJ2BW2211D2TE2852IZ2T52192392RK2DB2DY2EC2QX2MU2E02O62LB2NS2RV2JM2FY2NZ2QI2B62NO2MZ2ON2SC2D42QR2CJ2QR2QT2LP2VT2NR2JQ2DV2D12EF2N32932I62GS2KQ2CT2VY2B62CS2D72M22EJ2VX2E62N62JQ2D52CH29V2RU2WC2SC2D92VP2MP2CK2EF2QU2M42L62HT29A2EF2CY2DI2932IO2GM29V2AW2D72X02MF2HW29V2X72ON2932FY2HK29V29A2X62CT2HJ2X32BP2XI2932FP2XF2B52MA2JQ2JQ2N329V2VB2QJ2KC2RS2OL2EM2JM2CS2NZ2XV2WF29L2CS2CC2GQ2LJ2XZ2RV2L52QL2IU2WM2NM2D12S02EV2N52Y82D12E22CQ2CS2742GQ2CW2XW2RQ2S12RK2S42762LD2FP2RY2VF2FP2RO2752FW2S52RK2S82HP2CW2E52LC2JJ2N62CS2EI2YR2D12YT2E02CW2932LI2Y02Z02QP2Y02Z22762SA2ZD2ED2D92LD2YJ2LZ2Y62IZ2CH2932H82ON2CW2FP2CH2WI2QG2A12FW2B62W32A02R12KL2ED2LF2922LP23E310N2O32LO2DB2R32NS2Y22RK2PE2OS2OU2OW2FY2C42SW2X82VA2YN2DB2VE2IF2RJ2RJ2FC2R82IV2ZU2OG2AA2ES29F27W2EN2RM2CP2M52ZF2WD2NS2SC2R42MO2HT2ES2Q82TG2T12TJ2M5192TN2KS2SI2193109311P2LK2KK2VM2M02CF31182JN311A2DN2CF2LD2R22Y02AA2QI2ZU2WT2NH2QX2ES2RE2IW2VE2MO2RH2Z12IU2LI2LP2QP311W2ZU2LD311L27V2BY311Z22C22L2U127522L2TB2RW2GN2MO2OF2WU311T2HB2JS2CE1T21I310M2CO2EU2CJ2LD2ML311J2SD2TK312F2YG21922H313D2982FP31152AR2BX2JS29X29Z31272KU2OX21Z21U2BD2OX2TZ2TT2DM23C27M22N22S2BY2DM2B327N314T2X82B02B22B42DM2AY21T2BD2982BH22P2TE2AS2AI21W27P2O32AL2Q721W2TT2DY27M2BC2BE2B42FY2QC22C2O9224314U2762AM31512182302QG31422CW2JM2RJ2XZ2JZ2VW2D52VU27631682O42ZU2WG2N71B2V12192K92XZ2WT316J2752WO2R7313O2DC310T2YJ2VY2JR313X276316G2CK2TN2HP2WT31702WE312V2E02EF2I22Z62RK2FU2FP2EZ2YI31332763173316E2EC316Y2CJ172CF2ZP2LP317M311S2CJ2FY2MV317L2JJ2WT317Q31742QG2WK31192ZQ2MF29A2EM29V2N6316B2AW2HK2CW2A12D5313S2D22DI2HC2YT2XR312I2D52D52FL21G2HF2XZ318B2BP2DE2XZ2ZE310P317G2CF317I2CF317K2191O2CF2E22WT3194317R313J312C2CJ31982QK275319D2N32KD3180319A2N631832FS316K2JX2LP317H2L9317J316H31732EI31722ED2L6317T2K12CJ3173310U2753173319H2OX2ON3181312I31832D52N6318W319N2CK318W31412NS2H13139311N313C313E314I314K2A92TY2U02X8314W314S2BY2T72TW2TA2BE2TR31AU2BH29C29E29G29T310K27523H21T22422C27N2B42FF22P2OT29X31BC31BE27N2X8314Q314X2BY2R62RV2OE311R316V2OL2WX3131318F2WC2CO2X72IZ2XQ310J2W23117274318C2N52F72CW2AW2CH2DH2AA2D031CB2CJ31AE2D229A31CM2CW2AC319I2JQ2XQ2ZP275313W2M6313Z2M431362DF2AA2FY2UG22H2UG21V22J319A22G21W230315C27P2FC311Z2TE2ME2SK312231422TM2SD316R2O12MR2NE2762O22SF2N12KP318P2NH31CL2H12CK1B2HV2EU31712LP31E52NR2I531192GE2QZ2X82SB31002MR2O22JM2FP2LD2V82QM311I2VF2ES2TV2AM21B2SA2L6312P2VR318Q319P316A319Y313O317U310K312E31F4316C2N22CC2WP2MQ316U2WQ310L31DT2JX2NF317N2QG2JZ2AA2AW2NZ310W31EO311I2EF314E2152F12XC2DF2QR293316B317F2GX311S31832E82K12XD317W2LP2HO31F72SF2CC31G32YJ2LJ31FF31FE2YJ2ZR31FF2CJ2FU2MQ29V2EZ2X72RU2X52N731AJ2MR2KO2JM311G2CG2VF31F03144314631AP315K29D2SX315N2X82B122N31D5314D2M9315P31BE315S2BY314G2J321B313431EV316A31A131EY31A431HQ2N9316A31EX31G931G031F631GU31BX2JM31BZ310L31C12N42LS2932CC31F531I8312K310J2M02XL29V29331CU2ED2XT2CK31F3316M31HR316M2Y62DM2YB312X2Y02KP310Y31312WC31FO2SE31EP276311M31HI2V631CC310V31BX2NA313231GA311X311K27631H32982DM315W2BN315O276315Q31HH2SH2KU2182D0313K2TK2MV2LR31G731F0311S311C2172VW31HW318X2RT31EN2OL2IE310T29A2IZ2CJ318F2NZ2CJ2HK316W31J92WH2LL316R31F52D92QW274319I2G1313Q2D331302FQ2KP317E31JA2ZU2KP31AM31J3313K2M5313M2QP31HT311U31K431422M52ZW2MO2F12M331FP31L931J427631EM31IY31L8');local o=bit and bit.bxor or function(l,e)local n,o=1,0 while l>0 and e>0 do local C,E=l%2,e%2 if C~=E then o=o+n end l,e,n=(l-C)/2,(e-E)/2,n*2 end if l<e then l=e end while l>0 do local e=l%2 if e>0 then o=o+n end l,n=(l-e)/2,n*2 end return o end local function n(e,l,n)if n then local l=(e/2^(l-1))%2^((n-1)-(l-1)+1);return l-l%1;else local l=2^(l-1);return(e%(l+l)>=l)and 1 or 0;end;end;local l=1;local function e()local e,C,n,E=c(a,l,l+3);e=o(e,45)C=o(C,45)n=o(n,45)E=o(E,45)l=l+4;return(E*16777216)+(n*65536)+(C*256)+e;end;local function F()local e=o(c(a,l,l),45);l=l+1;return e;end;local function E()local n,e=c(a,l,l+2);n=o(n,45)e=o(e,45)l=l+2;return(e*256)+n;end;local function J()local o=e();local l=e();local C=1;local o=(n(l,1,20)*(2^32))+o;local e=n(l,21,31);local l=((-1)^n(l,32));if(e==0)then if(o==0)then return l*0;else e=1;C=0;end;elseif(e==2047)then return(o==0)and(l*(1/0))or(l*(0/0));end;return d(l,e-1023)*(C+(o/(2^52)));end;local d=e;local function f(e)local n;if(not e)then e=d();if(e==0)then return'';end;end;n=C(a,l,l+e-1);l=l+e;local e={}for l=1,#n do e[l]=t(o(c(C(n,l,l)),45))end return M(e);end;local l=e;local function N(...)return{...},A('#',...)end local function d()local a={};local c={};local l={};local D={a,c,nil,l};local l=e()local o={}for n=1,l do local e=F();local l;if(e==2)then l=(F()~=0);elseif(e==1)then l=J();elseif(e==0)then l=f();end;o[n]=l;end;D[3]=F();for c=1,e()do local l=F();if(n(l,1,1)==0)then local C=n(l,2,3);local F=n(l,4,6);local l={E(),E(),nil,nil};if(C==0)then l[3]=E();l[4]=E();elseif(C==1)then l[3]=e();elseif(C==2)then l[3]=e()-(2^16)elseif(C==3)then l[3]=e()-(2^16)l[4]=E();end;if(n(F,1,1)==1)then l[2]=o[l[2]]end if(n(F,2,2)==1)then l[3]=o[l[3]]end if(n(F,3,3)==1)then l[4]=o[l[4]]end a[c]=l;end end;for l=1,e()do c[l-1]=d();end;return D;end;local function J(l,E,M)local n=l[1];local e=l[2];local l=l[3];return function(...)local t=n;local f=e;local n=l;local i=N local o=1;local F=-1;local d={};local a={...};local c=A('#',...)-1;local C={};local e={};for l=0,c do if(l>=n)then d[l-n]=a[l+1];else e[l]=a[l+1];end;end;local l=c-n+1 local l;local n;while true do l=t[o];n=l[1];if n<=15 then if n<=7 then if n<=3 then if n<=1 then if n==0 then local n=l[2];local o=e[l[3]];e[n+1]=o;e[n]=o[l[4]];else local n=l[2]e[n](D(e,n+1,l[3]))end;elseif n>2 then local l=l[2]e[l](e[l+1])else local l=l[2]e[l]=e[l](e[l+1])end;elseif n<=5 then if n>4 then e[l[2]]=e[l[3]];else local F=l[2];local E={};for l=1,#C do local l=C[l];for n=0,#l do local n=l[n];local o=n[1];local l=n[2];if o==e and l>=F then E[l]=o[l];n[1]=E;end;end;end;end;elseif n==6 then for l=l[2],l[3]do e[l]=nil;end;else local o=l[2]local C={e[o](e[o+1])};local n=0;for l=o,l[4]do n=n+1;e[l]=C[n];end end;elseif n<=11 then if n<=9 then if n>8 then e[l[2]]=E[l[3]];else e[l[2]]();end;elseif n==10 then e[l[2]]={};else e[l[2]]=e[l[3]][l[4]];end;elseif n<=13 then if n>12 then e[l[2]]=l[3];else local o=l[3];local n=e[o]for l=o+1,l[4]do n=n..e[l];end;e[l[2]]=n;end;elseif n==14 then if(e[l[2]]~=l[4])then o=o+1;else o=l[3];end;else e[l[2]]=M[l[3]];end;elseif n<=23 then if n<=19 then if n<=17 then if n==16 then do return e[l[2]]end else local l=l[2]local o,n=i(e[l](e[l+1]))F=n+l-1 local n=0;for l=l,F do n=n+1;e[l]=o[n];end;end;elseif n==18 then do return end;else e[l[2]]=(l[3]~=0);end;elseif n<=21 then if n>20 then E[l[3]]=e[l[2]];else local n=l[2]e[n]=e[n](D(e,n+1,l[3]))end;elseif n>22 then local n=e[l[4]];if not n then o=o+1;else e[l[2]]=n;o=l[3];end;else local l=l[2]e[l](D(e,l+1,F))end;elseif n<=27 then if n<=25 then if n==24 then o=l[3];else local l=l[2]e[l]=e[l]()end;elseif n==26 then if not e[l[2]]then o=o+1;else o=l[3];end;else e[l[2]][l[3]]=l[4];end;elseif n<=29 then if n==28 then local n=l[2]local C={e[n](D(e,n+1,l[3]))};local o=0;for l=n,l[4]do o=o+1;e[l]=C[o];end else e[l[2]][l[3]]=e[l[4]];end;elseif n<=30 then if e[l[2]]then o=o+1;else o=l[3];end;elseif n==31 then local c=f[l[3]];local F;local n={};F=H({},{__index=function(e,l)local l=n[l];return l[1][l[2]];end,__newindex=function(o,l,e)local l=n[l]l[1][l[2]]=e;end;});for F=1,l[4]do o=o+1;local l=t[o];if l[1]==5 then n[F-1]={e,l[3]};else n[F-1]={E,l[3]};end;C[#C+1]=n;end;e[l[2]]=J(c,F,M);else if(e[l[2]]==l[4])then o=o+1;else o=l[3];end;end;o=o+1;end;end;end;return J(d(),{},i())();
+local HttpService = game:GetService("HttpService")
+
+local ws = nil
+local connected = false
+local reconnecting = false
+local onSettingsCallback = nil
+local onStatusCallback = nil
+local pingThread = nil
+local role = "alt"
+local currentGame = "unknown"
+local currentHost = ""
+local currentName = ""
+
+local function safeEncode(t)
+    local ok, result = pcall(HttpService.JSONEncode, HttpService, t)
+    return ok and result or nil
+end
+
+local function safeDecode(s)
+    local ok, result = pcall(HttpService.JSONDecode, HttpService, s)
+    return ok and result or nil
+end
+
+local function cleanup()
+    connected = false
+    if pingThread then
+        pcall(task.cancel, pingThread)
+        pingThread = nil
+    end
+    if ws then
+        pcall(function() ws:Close() end)
+        ws = nil
+    end
+end
+
+local function connect()
+    if reconnecting then return end
+
+    if not WebSocket then
+        warn("[BobcatWS] WebSocket not supported on this executor")
+        return
+    end
+
+    reconnecting = true
+
+    task.spawn(function()
+        while true do
+            cleanup()
+            local ok, result = pcall(function()
+                ws = WebSocket.connect(SERVER_URL)
+            end)
+
+            if not ok or not ws then
+                warn("[BobcatWS] Connection failed: " .. tostring(result))
+                task.wait(5)
+                reconnecting = true
+            else
+                local authPayload = safeEncode({
+                    key = AUTH_KEY,
+                    game = currentGame,
+                    host = currentHost,
+                    name = currentName,
+                    role = role
+                })
+
+                pcall(function() ws:Send(authPayload) end)
+
+                pingThread = task.spawn(function()
+                    while ws do
+                        task.wait(10)
+                        if ws then
+                            pcall(function()
+                                ws:Send(safeEncode({ type = "ping" }))
+                            end)
+                        end
+                    end
+                end)
+
+                ws.OnMessage:Connect(function(msg)
+                    local data = safeDecode(msg)
+                    if not data then return end
+
+                    if data.type == "connected" then
+                        connected = true
+                        reconnecting = false
+                        if role == "alt" then
+                            pcall(function()
+                                ws:Send(safeEncode({
+                                    type = "join",
+                                    name = currentName,
+                                    userId = tostring(game:GetService("Players").LocalPlayer.UserId)
+                                }))
+                            end)
+                        end
+                    elseif data.type == "join" and onStatusCallback then
+                        pcall(onStatusCallback, data.name, { UserId = data.userId, Status = "Online", LastActive = os.time() })
+                    elseif data.type == "settings" and onSettingsCallback then
+                        pcall(onSettingsCallback, data.payload)
+                    elseif data.type == "status" and onStatusCallback then
+                        pcall(onStatusCallback, data.name, data.payload)
+                    end
+                end)
+
+                ws.OnClose:Connect(function()
+                    connected = false
+                    ws = nil
+                    if getgenv().uiActive ~= false then
+                        task.wait(5)
+                        reconnecting = false
+                        connect()
+                    end
+                end)
+
+                reconnecting = false
+                warn("[BobcatWS] Connected as " .. role .. ": " .. currentName)
+                break
+            end
+        end
+    end)
+end
+
+function BobcatWS.ConnectHost(gameName, hostName)
+    if connected or reconnecting then return end
+    role = "host"
+    currentGame = gameName
+    currentHost = hostName
+    currentName = hostName
+    connect()
+end
+
+function BobcatWS.ConnectAlt(gameName, hostName, altName, settingsCallback)
+    if connected or reconnecting then return end
+    role = "alt"
+    currentGame = gameName
+    currentHost = hostName
+    currentName = altName
+    onSettingsCallback = settingsCallback
+    connect()
+end
+
+function BobcatWS.OnStatus(callback)
+    onStatusCallback = callback
+end
+
+function BobcatWS.PushSettings(target, payload)
+    if not connected or not ws then return end
+    local msg = safeEncode({
+        type = "settings",
+        target = target or "all",
+        payload = payload
+    })
+    if msg then
+        pcall(function() ws:Send(msg) end)
+    end
+end
+
+function BobcatWS.PushStatus(payload)
+    if not connected or not ws then return end
+    local msg = safeEncode({
+        type = "status",
+        payload = payload
+    })
+    if msg then
+        pcall(function() ws:Send(msg) end)
+    end
+end
+
+function BobcatWS.IsConnected()
+    return connected
+end
+
+function BobcatWS.Disconnect()
+    cleanup()
+end
+
+return BobcatWS
