@@ -2431,6 +2431,7 @@ end
 setupListeners()
 pcall(updateWeatherUI)
 
+local isWorker = getgenv().Automation == true or getgenv().Automitation == true
 if not isWorker and getgenv().BobcatWS then
     getgenv().BobcatWS.ConnectHost("GaG2", game:GetService("Players").LocalPlayer.Name)
 end
