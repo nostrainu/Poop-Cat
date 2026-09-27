@@ -29,6 +29,19 @@
         "Name": "Karinderya",
         "Files": [
             {
+                "Type": "Functions",
+                "Url": "https://raw.githubusercontent.com/nostrainu/Poop-Cat/main/Main/KD/KarinderyaFunc.lua"
+            },
+            {
+                "Type": "UI",
+                "Url": "https://raw.githubusercontent.com/nostrainu/Poop-Cat/main/Main/KD/KarinderyaMain.lua"
+            }
+        ]
+    },
+    "KarinderyaOld": {
+        "Name": "KarinderyaOld",
+        "Files": [
+            {
                 "Type": "UI",
                 "Url": "https://raw.githubusercontent.com/nostrainu/Poop-Cat/main/Main/KD/KDMain.lua"
             }
