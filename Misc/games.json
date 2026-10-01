@@ -47,8 +47,18 @@
             }
         ]
     },
+    "SK": {
+        "Name": "Suki",
+        "Files": [
+            {
+                "Type": "UI",
+                "Url": "https://raw.githubusercontent.com/nostrainu/Poop-Cat/main/Main/SK/SKMain.lua"
+            }
+        ]
+    },
     "71132543521245": "MAIN",
     "91255392593879": "MAIN",
     "97598239454123": "GAG2",
-    "116497287371701": "KD"
+    "116497287371701": "KD",
+    "109475655864288": "SK"
 }
