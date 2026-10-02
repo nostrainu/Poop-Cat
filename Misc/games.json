@@ -56,9 +56,23 @@
             }
         ]
     },
+    "KUBO": {
+        "Name": "Bahay Kubo Garden",
+        "Files": [
+            {
+                "Type": "Functions",
+                "Url": "https://raw.githubusercontent.com/nostrainu/Poop-Cat/main/Main/KUBO/KuboFunc.lua"
+            },
+            {
+                "Type": "UI",
+                "Url": "https://raw.githubusercontent.com/nostrainu/Poop-Cat/main/Main/KUBO/KuboMain.lua"
+            }
+        ]
+    },
     "71132543521245": "MAIN",
     "91255392593879": "MAIN",
     "97598239454123": "GAG2",
     "116497287371701": "KD",
-    "109475655864288": "SK"
+    "109475655864288": "SK",
+    "81403703556465": "KUBO"
 }
